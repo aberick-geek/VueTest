@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    body{
+        @apply  font-[Poppins]
+    }
+    .etaperempli {
+        @apply after:bg-indigo-500 before:bg-indigo-500 !important
+    }
+    .apparait {
+        @apply top-[80px] opacity-100 z-50 rounded-b-xl !important
+    }
+    h1 {
+        @apply text-2xl font-[Poppins] m-5
+    }
+    p {
+        @apply mt-[5px] mb-[5px]
+    }
+    .button {
+        @apply border-[1px] rounded-[20px]
+        font-light text-[1.2rem] py-[5px] px-[20px] transition-transform duration-100 ease-in
+        tracking-[1px] shadow-inner shadow-[0_1px_2px_rgba(0,0,0,0.4)]
+
+    }
+    section {
+        @apply absolute top-0 flex items-center justify-around flex-col 
+        pt-[20px] px-[40px] pb-[40px] bg-white text-center
+        transition-all duration-500 ease-in-out
+    }
+    div {
+        @apply text-[1rem]
+    }
+    input[type="text"],input[type="password"],input[type="email"] {
+        @apply bg-[#eee] border-0 py-[4px] px-[15px] my-[6px] mx-0 w-[100%]
+        rounded-[15px] border-b-[1px] border-[#ddd] shadow-inner shadow-[0_1px_2px_rgba(0,0,0,0.4)]
+        focus:bg-white focus:outline-0
+    }
+    select {
+        @apply bg-[#eee] border-0 py-[4px] px-[15px] my-[6px] mx-0 w-[100%]
+        rounded-[15px] border-b-[1px] border-[#ddd] shadow-inner shadow-[0_1px_2px_rgba(0,0,0,0.4)]
+        focus:outline-1
+    }
+    .button-zone {
+        @apply flex justify-around border-gray-900 flex-col m-5 items-center
+        focus:border-2 hover:bg-slate-500 cursor-pointer
+    }
+    input:checked+label {
+        @apply text-red-600
+    }
+    img {
+        @apply h-[150px] w-[150px]
+    }
+}

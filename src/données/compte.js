@@ -1,0 +1,1 @@
+export const compte = {id:0 ,nom: 'lorem',image: '/images/image-form3.jpg' ,checked: false}
