@@ -6,8 +6,10 @@
     import formVals from "../fonctions/stockForm"
     import { ref } from 'vue'
 
+    import onPush from '../fonctions/save'
+
     const inscription = ref(false)
-    const pointer = ref(0)
+    const pointer = ref(3)
     const valeurs = formVals()
     valeurs.photo = '../../images/user.png'
     /*const props = defineProps(['formError'])
@@ -45,34 +47,41 @@ export default {
       return this.v$
     },
     etapeSui (){
-      this.age = this.valeurs.age
-      this.nom = this.valeurs.nom
-      this.prenom = this.valeurs.prenom
-      this.sexe = this.valeurs.sexe
-      this.mdp = this.valeurs.mdp
-      this.mail = this.valeurs.email
-      this.country = this.valeurs.country
-      this.town = this.valeurs.town
-      this.photo = this.valeurs.photo
-      this.v$.$validate()
-      console.log(this.v$.$errors.length);
-      if ((this.v$.$errors.length < 5)&&(this.pointer == 0)) {
-        this.pointer++
-      } else if((this.v$.$errors.length == 0)&&(this.pointer > 0)){
-        this.pointer++
+      if (this.pointer == 0) {
+        this.age = this.valeurs.age
+        this.nom = this.valeurs.nom
+        this.prenom = this.valeurs.prenom
+        this.mail = this.valeurs.email
+        this.v$.age.$validate()
+        this.v$.nom.$validate()
+        this.v$.prenom.$validate()
+        this.v$.mail.$validate()
+        if(this.v$.$errors.length == 0){
+          this.pointer++
+        }
+      } else if(this.pointer > 0){
+        this.sexe = this.valeurs.sexe
+        this.mdp = this.valeurs.mdp
+        this.country = this.valeurs.country
+        this.town = this.valeurs.town
+        this.photo = this.valeurs.photo
+        this.v$.sexe.$validate()
+        this.v$.mdp.$validate()
+        this.v$.country.$validate()
+        this.v$.town.$validate()
+        if(this.v$.$errors.length == 0){
+          this.pointer++
+        }
       }
     },
 
     
 
     etapePre (){
-        this.pointer--
+        if(this.v$.$errors.length == 0){
+          this.pointer--
+        }
     },
-
-    onPush (){
-      router.push('/dashboard')
-      console.log('sa marche');
-    }
     
   },
   validations: {
