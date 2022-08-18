@@ -7,14 +7,10 @@ export default function formValue() {
         age:0,
         email:'',
         mdp:'',
-        mdpRepeat:'',
         sexe:'',
         photo:'',
         country:'',
         town:'',
-        etapeFirstValide: false,
-        etapeSecondValide: false,
-        etapeThirdValide: false,
     });
     return {
         valeurs,

@@ -1,14 +1,28 @@
 <script setup>
-    const props = defineProps(['formVals']);
+    import { onMounted } from 'vue'
+    /*import formError from '../../fonctions/formError'
+    import { onMounted } from 'vue'
+    const error = formError()
+
+    onMounted(() => {
+        console.log(error.error.nomErr);
+    })
+    */
+    const props = defineProps(['formVals','ereure']);
+    /*onMounted(() => {
+        console.log(props.ereure);
+    })*/
 </script>
 <template>  
     <div id="etape1" class="my-4">
-      <input type="text" name="nom" @change="setNom($event.target.value)" v-model="props.formVals.nom" placeholder="Nom">
+      <input type="text" name="nom" v-model="props.formVals.nom" placeholder="Nom">
+      <small class="text-red-400" v-if="props.ereure.nom.$errors[0]">{{ props.ereure.nom.$errors[0].$message }}</small>
       <input type="text" name="prenom" v-model="props.formVals.prenom" placeholder="Prenom">
+      <small class="text-red-400" v-if="props.ereure.prenom.$errors[0]">{{ props.ereure.prenom.$errors[0].$message }}</small>
       <input type="text" name="age" v-model="props.formVals.age" placeholder="Age">
+      <small class="text-red-400" v-if="props.ereure.age.$errors[0]">{{ props.ereure.age.$errors[0].$message }}</small>
       <input type="email" name="email" v-model="props.formVals.email" placeholder="Email">
-      <input type="password" name="mdp" v-model="props.formVals.mdp" placeholder="Mot de passe">
-      <input type="password" name="mdpRepeat" v-model="props.formVals.mdpRepeat" placeholder="Repeter le Mot de passe">
+      <small class="text-red-400" v-if="props.ereure.mail.$errors[0]">{{ props.ereure.mail.$errors[0].$message }}</small>
     </div>
 </template>
 

@@ -3,90 +3,88 @@
     import etapeSecond from './etapes/etapeSecond.vue'
     import etapeThird from './etapes/etapeThird.vue'
     import etapeLast from './etapes/etapeLast.vue'
-    import formVals from "../fonctions/stockForm";
-
+    import formVals from "../fonctions/stockForm"
     import { ref } from 'vue'
 
     const inscription = ref(false)
     const pointer = ref(0)
-
     const valeurs = formVals()
     valeurs.photo = '../../images/user.png'
-
+    /*const props = defineProps(['formError'])
+    props.formError='oui'*/
     const etapes = [
         etapeFirst,
         etapeSecond,
         etapeThird,
         etapeLast,
     ]
-
     
-
-    const etapePre = () => {
-      console.log(valeurs);
-        pointer.value--
-    }
-
-    const onPush = () => {
-      router.push('/dashboard')
-      console.log('sa marche');
-    }
-
 </script>
 
 <script>
   import useVuelidate from '@vuelidate/core'
-  import formVales from "../fonctions/stockForm";
-  import {
-        required,
-        email,
-        sameAs,
-        minLength,maxLength,minValue,maxValue
-      } from '@vuelidate/validators'
+  import { required, email, minLength, maxLength, minValue, maxValue } from '@vuelidate/validators'
 export default {
   data() {
-    const valeurs = formVales()
     return {
       age: 0,
       nom: '',
       prenom: '',
-      email: '',
+      mail: '',
       mdp: '',
-      mdpRepeat: '',
+      sexe: '',
+      country: '',
+      town: '',
+      photo: '',
       v$: useVuelidate(),
     }
   },
   methods: {
 
-    getMdp (){
-      return 'value'
+    form (){
+      return this.v$
     },
-
-    etapeSui(){
+    etapeSui (){
       this.age = this.valeurs.age
       this.nom = this.valeurs.nom
       this.prenom = this.valeurs.prenom
       this.sexe = this.valeurs.sexe
       this.mdp = this.valeurs.mdp
-      this.mdpRepeat = this.valeurs.mdpRepeat
+      this.mail = this.valeurs.email
       this.country = this.valeurs.country
       this.town = this.valeurs.town
       this.photo = this.valeurs.photo
       this.v$.$validate()
-      console.log(this.valeurs,this.v$)
+      console.log(this.v$.$errors.length);
+      if ((this.v$.$errors.length < 5)&&(this.pointer == 0)) {
+        this.pointer++
+      } else if((this.v$.$errors.length == 0)&&(this.pointer > 0)){
+        this.pointer++
+      }
     },
+
+    
+
+    etapePre (){
+        this.pointer--
+    },
+
+    onPush (){
+      router.push('/dashboard')
+      console.log('sa marche');
+    }
     
   },
   validations: {
     nom: {
       required,
       minLength: minLength(3),
-      maxLength: maxLength(20)
+      maxLength: maxLength(25)
     },
     prenom: {
       required,
       minLength: minLength(3),
-      maxLength: maxLength(20)
+      maxLength: maxLength(25)
     },
     age: {
       required,
@@ -96,9 +94,9 @@ export default {
     sexe: {
       required
     },
-    email: {
-      required,
-      email
+    mail: {
+      required,email,
+      maxLength: maxLength(40)
     },
     country: {
       required
@@ -108,10 +106,7 @@ export default {
     },
     mdp: {
       required,
-      minLength: minLength(3),
-    },
-    mdpRepeat: {
-      sameAsPassword: sameAs(() => this.mdp)
+      minLength: minLength(8),
     },
   }
 }
@@ -146,8 +141,8 @@ export default {
         </div>
       </div>
       <section id="inscription" class="md:w-[50%] w-[100%] h-[100%] left-0 z-[1] opacity-1" :class="{'md:translate-x-[100%]' : inscription}">
-        <h1 class="mt-12 mb-2">Creer un Compte</h1>
-        <div class="mt-2 fixed top-0 flex justify-between" v-if="pointer<3">
+        <h1 class="mt-2 mb-2">Creer un Compte</h1>
+        <div class="mt-0 mb-10 relative flex justify-between" v-if="pointer<3">
           <ol class="flex">
               <li 
                   class="relative lg:w-[150px] w-[100px] text-center text-sm font-light
@@ -180,7 +175,8 @@ export default {
         <div>
           <component 
           v-bind:is="etapes[pointer]"
-          v-bind:formVals="valeurs" 
+          v-bind:formVals="valeurs"
+          :key="ereure" :ereure="form()"
           >
           </component>
         </div>

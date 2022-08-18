@@ -1,13 +1,16 @@
 <script setup>
-    const props = defineProps(['formVals'])
+    const props = defineProps(['formVals','ereure']);
 </script>
 <template>
     <div>
-        
+        <input type="password" name="mdp" v-model="props.formVals.mdp" placeholder="Mot de passe">
+        <small class="text-red-400" v-if="props.ereure.mdp.$errors[0]">{{ props.ereure.mdp.$errors[0].$message }}</small>
         <div id="localisation">
             <div>
+            <fieldset>
+            <legend>-- votre pays --</legend>
                 <select name="pays" v-model="props.formVals.country" id="country">
-                    <option value="choix">-- votre pays --</option>
+                    <option value="" selected>-- votre pays --</option>
                     <option value="CM">Cameroun</option>
                     <option value="US">United State</option>
                     <option value="CA">Canada</option>
@@ -15,10 +18,12 @@
                     <option value="DE">Allemagne</option>
                     <option value="HK">Angleterre</option>
                 </select>
+                <small class="text-red-400" v-if="props.ereure.country.$errors[0]">{{ props.ereure.country.$errors[0].$message }}</small>
+            </fieldset>
             </div>
             <div>
                 <select name="ville" v-model="props.formVals.town" id="town">
-                    <option value="choix">-- votre ville --</option>
+                    <option value="" selected>-- votre ville --</option>
                     <option value="bonaberi">Bonaberi</option>
                     <option value="bessengue">Bessengue</option>
                     <option value="bonanjo">Bonanjo</option>
@@ -26,6 +31,7 @@
                     <option value="bali">Bali</option>
                     <option value="yaounde">Yaounde</option>
                 </select>
+                <small class="text-red-400" v-if="props.ereure.town.$errors[0]">{{ props.ereure.town.$errors[0].$message }}</small>
             </div>
         </div>
         <div id="genre" class="flex flex-row mt-5">
