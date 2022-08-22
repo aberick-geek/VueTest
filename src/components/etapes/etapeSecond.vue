@@ -1,5 +1,10 @@
 <script setup>
     const props = defineProps(['formVals','ereure']);
+    /*
+    const $emit = defineEmits(['mdp','country','town','sexe'])
+     @change="$emit('mdp', props.formVals.mdp)"
+    */
+
 </script>
 <template>
     <div>
@@ -19,6 +24,7 @@
                 <div class="w-full">
                     <small class="text-red-400" v-if="props.ereure.country.$errors[0]">{{ props.ereure.country.$errors[0].$message }}</small>
                 </div>
+                
             </div>
             <div class="flex flex-wrap">
                 <label for="ville">-- votre ville --</label>

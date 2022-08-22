@@ -9,10 +9,10 @@
                 <div class="w-70 h-70 rounded-full overflow-hidden mr-0 border-2 border-gray-300">
                     <img :src="props.formVals.photo" alt="profil de l'utilisateur" class="w-70 h-70">                    
                 </div>
-                <div class="text-sm">
-                    <p v-text="props.formVals.email"></p>
-                    <p class="text-gray-900 leading-5 text-xl"><strong v-text="props.formVals.nom+' '"></strong><span v-text="props.formVals.prenom"></span></p>
-                    <p class="text-gray-600" v-text="props.formVals.age + 'ans'"></p>
+                <div class="text-sm overflow-hidden">
+                    <p class="truncate" v-text="props.formVals.mail"></p>
+                    <p class="text-gray-900 truncate leading-5 text-xl"><strong v-text="props.formVals.nom+' '"></strong><span v-text="props.formVals.prenom"></span></p>
+                    <p class="text-gray-600 truncate" v-text="props.formVals.age + 'ans'"></p>
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@ export default function formValue() {
         prenom:'',
         nom:'',
         age:0,
-        email:'',
+        mail:'',
         mdp:'',
         sexe:'',
         photo:'',

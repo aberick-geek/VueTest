@@ -32,7 +32,7 @@
     div {
         @apply text-[1rem]
     }
-    input[type="text"],input[type="password"],input[type="email"] {
+    input[type="text"],input[type="password"],input[type="email"],input[type="number"] {
         @apply bg-[#eee] border-0 py-[4px] px-[15px] my-[6px] mx-0 w-[100%]
         rounded-[15px] border-b-[1px] border-[#ddd] shadow-inner shadow-[0_1px_2px_rgba(0,0,0,0.4)]
         focus:bg-white focus:outline-0

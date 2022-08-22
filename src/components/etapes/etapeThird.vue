@@ -15,6 +15,7 @@
     }
     return false
 }
+    props.formVals.photo = '../../images/user.png'
 
     const uploadFile = () => {
         const inputFile = document.querySelector('input')

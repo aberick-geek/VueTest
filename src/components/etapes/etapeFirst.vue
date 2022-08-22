@@ -1,5 +1,5 @@
 <script setup>
-    import { onMounted } from 'vue'
+    //import { onMounted } from 'vue'
     /*import formError from '../../fonctions/formError'
     import { onMounted } from 'vue'
     const error = formError()
@@ -11,17 +11,18 @@
     const props = defineProps(['formVals','ereure']);
     /*onMounted(() => {
         console.log(props.ereure);
+        const $emit= defineEmits(['nom','prenom'...])
     })*/
 </script>
 <template>  
     <div id="etape1" class="my-4">
-      <input type="text" name="nom" v-model="props.formVals.nom" placeholder="Nom">
+      <input type="text" name="nome" v-model="props.formVals.nom" placeholder="Nom">
       <small class="text-red-400" v-if="props.ereure.nom.$errors[0]">{{ props.ereure.nom.$errors[0].$message }}</small>
       <input type="text" name="prenom" v-model="props.formVals.prenom" placeholder="Prenom">
-      <small class="text-red-400" v-if="props.ereure.prenom.$errors[0]">{{ props.ereure.prenom.$errors[0].$message }}</small>
-      <input type="text" name="age" v-model="props.formVals.age" placeholder="Age">
+      <small class="text-red-400"  v-if="props.ereure.prenom.$errors[0]">{{ props.ereure.prenom.$errors[0].$message }}</small>
+      <input type="number" name="age" v-model="props.formVals.age" placeholder="Age">
       <small class="text-red-400" v-if="props.ereure.age.$errors[0]">{{ props.ereure.age.$errors[0].$message }}</small>
-      <input type="email" name="email" v-model="props.formVals.email" placeholder="Email">
+      <input type="email" name="email" v-model="props.formVals.mail" placeholder="Email">
       <small class="text-red-400" v-if="props.ereure.mail.$errors[0]">{{ props.ereure.mail.$errors[0].$message }}</small>
     </div>
 </template>

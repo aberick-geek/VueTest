@@ -3,17 +3,144 @@
     import etapeSecond from './etapes/etapeSecond.vue'
     import etapeThird from './etapes/etapeThird.vue'
     import etapeLast from './etapes/etapeLast.vue'
-    import formVals from "../fonctions/stockForm"
-    import { ref } from 'vue'
+    import { ref, reactive } from 'vue'
+    import useVuelidate from '@vuelidate/core'
+    import { required, email, minLength, maxLength, minValue, maxValue } from '@vuelidate/validators'
 
     import onPush from '../fonctions/save'
-
+/*
+    let nom = ref('')
+    let prenom = ref('')
+    let age = ref('')
+    let mail = ref('')
+    let mdp = ref('')
+    let sexe = ref('')
+    let country = ref('')
+    let town = ref('')
+*/
     const inscription = ref(false)
-    const pointer = ref(3)
-    const valeurs = formVals()
-    valeurs.photo = '../../images/user.png'
-    /*const props = defineProps(['formError'])
-    props.formError='oui'*/
+    let pointer = ref(0)
+    
+    const valeurs = reactive({
+      nom:'',
+      prenom:'',
+      age:'',
+      mail:'',
+      mdp:'',
+      country:'',
+      town:'',
+      sexe:'',
+      photo:'',
+    })
+
+    const rules = {
+      nom: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(25)
+      },
+      prenom: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(25)
+      },
+      age: {
+        required,
+        minValue: minValue(18),
+        maxValue: maxValue(70)
+      },
+      sexe: {
+        required
+      },
+      mail: {
+        required,email,
+        maxLength: maxLength(40)
+      },
+      country: {
+        required
+      },
+      town: {
+        required
+      },
+      mdp: {
+        required,
+        minLength: minLength(8),
+      },
+    }
+
+    
+    const v$ = useVuelidate(rules, valeurs)
+
+    const etapeSui = async ()=> {
+      if (pointer.value == 0) {
+        v$.value.nom.$validate()
+        v$.value.prenom.$validate()
+        v$.value.age.$validate()
+        v$.value.mail.$validate()
+        ///console.log(v$.value,formVals(),valeurs,v$.value.$errors.length,nom,prenom);
+        if(v$.value.$errors.length == 0){
+          pointer.value++
+          //console.log(pointer.value);
+        }
+      } else if(pointer.value > 0){
+        v$.value.sexe.$validate()
+        v$.value.mdp.$validate()
+        v$.value.country.$validate()
+        v$.value.town.$validate()
+        if(v$.value.$errors.length == 0){
+          pointer.value++
+        }
+      }
+    }
+/*
+    const getName = (name) => {
+      nom = name
+      return nom
+    }
+
+    const getSurname = (surname) => {
+      prenom = surname
+      return prenom
+    }
+
+    const getAge = (year) => {
+      age = year
+      return age
+    }
+
+    const getMail = (email) => {
+      mail = email
+      return mail
+    }
+
+    const getMdp = (password) => {
+      mdp = password
+      return mdp
+    }
+
+    const getPays = (pays) => {
+      country = pays
+      return country
+    }
+
+    const getVille = (ville) => {
+      town = ville
+      return town
+    }
+
+    const getGenre = (genre) => {
+      sexe = genre
+      return sexe
+    }
+*/
+    const etapePre = () => {
+        if(v$.value.$errors.length == 0){
+          pointer.value--
+        }
+    }
+
+    const ereure = {}
+    
     const etapes = [
         etapeFirst,
         etapeSecond,
@@ -23,6 +150,7 @@
     
 </script>
 
+<!--
 <script>
   import useVuelidate from '@vuelidate/core'
   import { required, email, minLength, maxLength, minValue, maxValue } from '@vuelidate/validators'
@@ -122,6 +250,7 @@ export default {
 
 
 </script>
+-->
 
 <template>
     <div class="flex justify-center items-center m-10 h-[100%]">
@@ -185,14 +314,14 @@ export default {
           <component 
           v-bind:is="etapes[pointer]"
           v-bind:formVals="valeurs"
-          :key="ereure" :ereure="form()"
+          :key="ereure" :ereure="v$"
           >
           </component>
         </div>
           <div>
             <button  v-if="pointer>0" class="button self-start bg-[#252ed6] mr-1 text-white active:scale-[.9] focus:outline-none bg-transparent border-white" @click="etapePre">précédent</button>
             <button v-if="pointer<=2" class="button self-end bg-[#252ed6] ml-1 text-white active:scale-[.9] focus:outline-none bg-transparent border-white" @click="etapeSui">suivant</button>
-            <button v-if="pointer>2" class="button bg-[#252ed6] text-white active:scale-[.9] focus:outline-none bg-transparent border-white" @click="onPush">terminer</button>
+            <button v-if="pointer>2" class="button bg-[#252ed6] text-white active:scale-[.9] focus:outline-none bg-transparent border-white" @click="onPush(valeurs)">terminer</button>
           </div>
           <div class="absolute md:hidden right-[5%] top-[90%]"><button class="border-[1px] px-2 rounded-[5px] text-[#252ed6]" @click="inscription = !inscription"><i class="fa fa-sign-in text-xl" aria-hidden="true"></i></button></div>
       </section>
