@@ -1,7 +1,9 @@
 const express = require("express");
-//const fs = require("fs")
+const fs = require("fs")
 const cors = require("cors")
 const bodyParser = require("body-parser")
+const parse = require("csv-parser")
+
 
 const host = 'localhost';
 const port = 5174;
@@ -26,11 +28,15 @@ server.use(bodyParser.urlencoded({
   extended:true
 }))
 
-server.get('/',(req, res) => {
-  console.log("controle z");
-  console.log(req.body)
-  console.log("controle zoozo");
-  res.json(req.body)
+server.post('/',(req,res) => {
+  console.log(req.json);
+  const csv = parse(req.body)
+  console.log(csv)
+  fs.appendFile('./base.csv', req.body +'\n',(err) => {
+    if (err) throw err
+    console.log('successfull wirte');
+})
+res.end(`save`);
 })
 server.listen(port, host, () => {
     console.log(`Server is running on http://${host}:${port}`);
