@@ -16,7 +16,7 @@
 export default async function onPush (register){
   console.log(register);
   
-  axios.post('http://localhost:5174',register)
+  axios.post('http://localhost:5174', register)
   .then((reponse)=>{
     console.log(reponse,'requetes post envoyer');
   })

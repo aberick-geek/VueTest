@@ -2,7 +2,21 @@ const express = require("express");
 const fs = require("fs")
 const cors = require("cors")
 const bodyParser = require("body-parser")
-const parse = require("csv-parser")
+//const csv = require("csv-parser")
+
+function ConvertToCSV(obj) {
+  var line = '';
+  var str = '';
+  for (var index in obj) {
+      if (line != '') line += ','
+
+      line += obj[index];
+  }
+
+  str += line;
+
+return str;
+}
 
 
 const host = 'localhost';
@@ -27,12 +41,12 @@ server.use(
 server.use(bodyParser.urlencoded({
   extended:true
 }))
+server.use(express.json())
 
 server.post('/',(req,res) => {
-  console.log(req.json);
-  const csv = parse(req.body)
-  console.log(csv)
-  fs.appendFile('./base.csv', req.body +'\n',(err) => {
+  console.log(req.body)
+  const user = ConvertToCSV(req.body)
+  fs.appendFile('/src/données/base.csv', user +'\n',(err) => {
     if (err) throw err
     console.log('successfull wirte');
 })

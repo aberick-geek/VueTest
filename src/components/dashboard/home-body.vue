@@ -1,6 +1,5 @@
 <script setup>
-    import {postes} from '../données/postes'
-    import { ref } from 'vue'
+    import {postes} from '../../données/postes'
     import $cookies from 'vue-cookies'
     
     const favoris = defineProps(['saveFavoris'])

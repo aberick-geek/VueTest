@@ -1,5 +1,5 @@
 <script setup>
-    import {abonnés} from '../données/abonnés'
+    import {abonnés} from '../../données/abonnés'
 
     const scrollTop = () => {
         var liste = document.querySelector('#friend-list-content');
@@ -38,7 +38,7 @@
                         </div>
                         <div id="Home" class="button-zone">
                             <button class="w-full focus:bg-gray-500">
-                                <router-link to="/Acceuil">
+                                <router-link to="/dashboard/">
                                     <div id="home-icone">
                                         <i class="fa fa-home text-2xl" aria-hidden="true"></i>
                                     </div>
@@ -50,7 +50,7 @@
                         </div>
                         <div id="Home" class=" button-zone">
                             <button class="w-full focus:bg-gray-500">
-                                <router-link to="/notification">
+                                <router-link to="/dashboard/notification">
                                     <div id="home-icone">
                                         <i class="fa fa-picture-o text-2xl" aria-hidden="true"></i>
                                     </div>
@@ -62,7 +62,7 @@
                         </div>
                         <div id="Home" class="button-zone">
                             <button class="w-full focus:bg-gray-500">
-                                <router-link to="/favoris">
+                                <router-link to="/dashboard/favoris">
                                     <div id="home-icone">
                                         <i class="fa fa-heart text-2xl" aria-hidden="true"></i>
                                     </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div id="Reglage" class="button-zone">
                             <button class="w-full focus:bg-gray-500">
-                                <router-link to="/reglages">
+                                <router-link to="/dashboard/reglages">
                                     <div id="reglage-icone">
                                         <i class="fa fa-sliders text-2xl" aria-hidden="true"></i>
                                     </div>
@@ -86,7 +86,7 @@
                         </div>
                         <div id="Home" class="button-zone">
                             <button class="w-full focus:bg-gray-500">
-                                <router-link to="/aide">
+                                <router-link to="/dashboard/aides">
                                     <div id="home-icone">
                                         <i class="fa fa-question-circle text-2xl" aria-hidden="true"></i>
                                     </div>
@@ -100,7 +100,15 @@
                 </div>
             </div>
             <div id="body" class="bg-[#f5f6fa] p-10">
-                <router-view></router-view>
+                <transition 
+                    enter-active-class="duration-300 ease-out"
+                    enter-from-class="transform opacity-0 scale-75"
+                    enter-to-class="opacity-100 scale-100"
+                    leave-active-class="duration-200 ease-in"
+                    leave-from-class="opacity-100 scale-100"
+                    leave-to-class="transform opacity-0 scale-75">
+                    <router-view/>
+                </transition>
             </div>
             <div id="nav-bar-right" class="h-full">
                 <div id="friend-list" class="relative h-full">

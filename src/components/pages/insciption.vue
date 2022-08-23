@@ -4,10 +4,11 @@
     import etapeThird from './etapes/etapeThird.vue'
     import etapeLast from './etapes/etapeLast.vue'
     import { ref, reactive } from 'vue'
+    import router from '../router'
     import useVuelidate from '@vuelidate/core'
+    import axios from 'axios'
     import { required, email, minLength, maxLength, minValue, maxValue } from '@vuelidate/validators'
 
-    import onPush from '../fonctions/save'
 /*
     let nom = ref('')
     let prenom = ref('')
@@ -147,6 +148,16 @@
         etapeThird,
         etapeLast,
     ]
+    async function onPush (register){
+      console.log(register);
+      
+      axios.post('http://localhost:5174', register)
+      .then((reponse)=>{
+        router.push({path: '/dashboard'})
+        console.log(reponse,'requetes post envoyer avec ');
+      })
+      .catch((erreur) => {throw erreur})
+    }
     
 </script>
 
@@ -311,12 +322,14 @@ export default {
         </div>
         <!--<div></div>-->
         <div>
-          <component 
-          v-bind:is="etapes[pointer]"
-          v-bind:formVals="valeurs"
-          :key="ereure" :ereure="v$"
-          >
-          </component>
+          <transition name="moveInUp">
+            <component 
+            v-bind:is="etapes[pointer]"
+            v-bind:formVals="valeurs"
+            :key="ereure" :ereure="v$"
+            >
+            </component>
+          </transition>
         </div>
           <div>
             <button  v-if="pointer>0" class="button self-start bg-[#252ed6] mr-1 text-white active:scale-[.9] focus:outline-none bg-transparent border-white" @click="etapePre">précédent</button>

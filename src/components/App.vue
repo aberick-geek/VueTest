@@ -1,6 +1,4 @@
 <script setup>
-  import inscription from './insciption.vue'
-  import dashboard from './dashboard.vue'
   import { ref } from 'vue'
 
   const iconName = ref('menu-outline')
@@ -34,9 +32,8 @@
     </ul>
   </nav>
 
-  <inscription></inscription>
+  <router-view></router-view>
 
-  
 </template>
 <!--
   <nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between">

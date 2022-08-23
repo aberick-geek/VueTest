@@ -1,5 +1,5 @@
 <script setup>
-    import { compte } from '../données/compte'
+    import { compte } from '../../données/compte'
 </script>
 <template>
     <div class="grid grid-cols-1 grid-rows-[40%_35%_15%]">
