@@ -20,11 +20,11 @@
 <template>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div id="poste" v-for="poste in postes"
-            class="overflow-hidden bg-gradient-to-bl to-blue-200 from-blue-300 rounded-md h-[250px] duration-500 shadow-md hover:scale-110 pointer">
-            <div id="image" class="h-[80%] w-full bg-center"
-                v-bind:style="{ backgroundImage: 'url(' + poste.image + ')' }">
+            class="overflow-hidden bg-gradient-to-bl to-blue-200 from-blue-300 rounded-t-md h-[250px] duration-500 shadow-md hover:scale-110 pointer">
+            <div id="image" class="h-[100%] w-full">
+                <img :src="poste.image" alt="profil de l'utilisateur" class="w-full h-full">
             </div>
-            <div id="description-poste" class="h-[20%] p-2 flex flex-row justify-between">
+            <!--<div id="description-poste" class="h-[20%] p-2 flex flex-row justify-between">
                 <div class="flex flex-row">
                     <div id="post-user-profil"
                         class="h-[40px] w-[40px] mx-2 rounded-full bg-[url('/images/image-form3.jpg')] bg-center">
@@ -41,7 +41,7 @@
                         <i class="fa fa-heart text-2xl" aria-hidden="true"></i>
                     </label>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </template>

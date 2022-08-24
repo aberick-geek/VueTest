@@ -1,39 +1,48 @@
 <script setup>
-  import { ref } from 'vue'
+import { ref } from "vue";
 
-  const iconName = ref('menu-outline')
+const iconName = ref("menu-outline");
 
-  const menu = () => {
-    iconName.value = iconName.value === 'menu-outline' ? 'close-outline' : 'menu-outline'
-    console.log(iconName.value);
-  }
-
+const menu = () => {
+  iconName.value = iconName.value === "menu-outline" ? "close-outline" : "menu-outline";
+  console.log(iconName.value);
+};
 </script>
 
 <template>
-  <nav class="p-5 sticky z-[1000] top-0 bg-white shadow md:flex md:items-center md:justify-between">
+  <nav
+    class="p-5 sticky z-[1000] top-0 bg-white shadow md:flex md:items-center md:justify-between"
+  >
     <div class="flex justify-between items-center">
-      <span class="text-2xl cursor-pointer">
-        Web Site Design
-      </span>
+      <span class="text-2xl cursor-pointer"> Web Site Design </span>
       <span class="text-3xl cursor-pointer md:hidden block mx-2">
-        <ion-icon v-if="iconName === 'menu-outline'" name="menu-outline" v-on:click="menu" ></ion-icon>
-        <ion-icon v-else name="close-outline" v-on:click="menu" ></ion-icon>
+        <ion-icon
+          v-if="iconName === 'menu-outline'"
+          name="menu-outline"
+          v-on:click="menu"
+        ></ion-icon>
+        <ion-icon v-else name="close-outline" v-on:click="menu"></ion-icon>
       </span>
-    </div> 
-    <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white 
-    w-full right-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-480px]
-    transition-all ease-in duration-300"
-      :class="{'apparait': iconName == 'close-outline'}"
+    </div>
+    <ul
+      class="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full right-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-480px] transition-all ease-in duration-300"
+      :class="{ apparait: iconName == 'close-outline' }"
     >
       <li class="mx-4 my-6 md:my-0">
         <a href="#" class="text-xl hover:text-cyan-500 duration-300">Acceuil</a>
       </li>
     </ul>
   </nav>
-
-  <router-view></router-view>
-
+  <transition
+    enter-active-class="duration-300 ease-out"
+    enter-from-class="transform opacity-0 scale-75"
+    enter-to-class="opacity-100 scale-100"
+    leave-active-class="duration-200 ease-in"
+    leave-from-class="opacity-100 scale-100"
+    leave-to-class="transform opacity-0 scale-75"
+  >
+    <router-view></router-view>
+  </transition>
 </template>
 <!--
   <nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between">

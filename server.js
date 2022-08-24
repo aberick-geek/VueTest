@@ -21,6 +21,7 @@ return str;
 
 const host = 'localhost';
 const port = 5174;
+let id = 0
 
 /*
   const requestListener = function (req, res) {
@@ -44,13 +45,20 @@ server.use(bodyParser.urlencoded({
 server.use(express.json())
 
 server.post('/',(req,res) => {
-  console.log(req.body)
-  const user = ConvertToCSV(req.body)
-  fs.appendFile('/src/données/base.csv', user +'\n',(err) => {
+  console.log(req.body.title)
+  console.log(req.body.data)
+  req.body.data.id = id
+  id++
+  const user = ConvertToCSV(req.body.data)
+  fs.appendFile('./src/données/base.csv', user +'\n',(err) => {
     if (err) throw err
     console.log('successfull wirte');
 })
-res.end(`save`);
+res.end(`save`+ req.body);
+})
+server.post('/dashboard/reglages',(req,res) => {
+  console.log(req.body)
+res.end(`edit save`+ req.body);
 })
 server.listen(port, host, () => {
     console.log(`Server is running on http://${host}:${port}`);

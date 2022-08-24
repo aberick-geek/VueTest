@@ -1,5 +1,17 @@
 <script setup>
     import {abonnés} from '../../données/abonnés'
+    /*window.addEventListener('load', () => {
+        statut = navigator.onLine ? true : false
+        alert(statut)
+    })*/
+    window.addEventListener('online', () => {
+        const states = document.getElementById('status')
+        states.classList.remove('hidden')
+    })
+    window.addEventListener('offline', () => {
+        const states = document.getElementById('status')
+        states.classList.add('hidden')
+    })
 
     const scrollTop = () => {
         var liste = document.querySelector('#friend-list-content');
@@ -15,22 +27,24 @@
             top: liste.scrollTop -= 88,
             behavior: 'smooth',
         });
-        console.log(liste.scrollTop);
+        console.log(liste.scrollTop,statut,navigator.onLine);
     }
     
 </script>
 
 <template>
     <div id="globale" class="flex justify-center items-center w-full h-[100vh]">
-        <div id="contenu" class="grid grid-cols-[15%_85%_0%] lg:grid-cols-[10%_65%_25%]  w-full h-[100vh]">
+        <div id="contenu" class="grid grid-cols-[15%_85%_0%] lg:grid-cols-[10%_75%_15%]  w-full h-[100vh]">
             <div id="nav-bar-left" class="">
                 <div id="nav-menu-bar" class="fixed top-[72px] w-[15%] md:w-[10%] h-[100%] py-2 bg-[#dfe0fb]">
                     <div id="nav-menu-bar-content" class="h-[90%]">
                         <div id="profil" class="flex justify-around flex-col mx-0 md:m-5 items-center">
-                            <div id="image-profil">
-                                <div id="image" class="md:h-[60px] h-[40px] w-[40px] md:w-[60px] rounded-full border-2 border-gray-400 items-center
-                                justify-start bg-[url('/images/image-form3.jpg')]">
+                            <div class="mb-2 flex relative">
+                                <div class="overflow-hidden flex justify-center items-center rounded-full border-2 border-gray-300">
+                                    <img src='/images/image-form3.jpg' class="md:h-[60px] h-[40px] w-[40px] md:w-[60px]" alt="profil">
                                 </div>
+                                <button id="status" class="absolute border-2 active:scale-[.9] p-1 md:p-2 border-gray-200 bg-green-500 rounded-full right-0 bottom-0">
+                                </button>
                             </div>
                             <div id="username" class="justify-center items-center hidden lg:block text-xl">
                                 patrick
@@ -115,9 +129,11 @@
                     <div id="friend-list-content" class="flex sticky top-[80px] overflow-hidden flex-col h-[60%] m-5">
                         <button class="top-0 bg-[#fffc] rounded-sm sticky" @click="scrollTop()"><i class="fa fa-chevron-circle-up text-2xl"></i></button>
                         <div id="friend" v-for="abonné in abonnés" class="flex flex-row m-2 border-2 justify-start bg-gradient-to-bl to-blue-200 from-blue-300 rounded-md p-2 items-center">
-                            <div id="friend-profil" class="mx-2">
-                                <div id="image" class="h-[60px] w-[60px] rounded-full items-center
-                                justify-start bg-center" v-bind:style="{ backgroundImage: 'url(' + abonné.profil + ')' }">
+                            <div id="friend-profil" class="mx-2 flex relative">
+                                <div class="flex overflow-hidden justify-center items-center rounded-full border-2 border-gray-300">
+                                    <img src='/images/user.png' class="h-[40px] w-[40px]" alt="profil">
+                                    <button id="status" class="absolute border-2 active:scale-[.9] p-1 border-gray-200 bg-green-500 rounded-full right-0 bottom-0">
+                                    </button>
                                 </div>
                             </div>
                             <div id="friend-name">
