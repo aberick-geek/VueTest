@@ -1,5 +1,6 @@
 <script setup>
     import {abonnés} from '../../données/abonnés'
+    import {onMounted} from 'vue'
     /*window.addEventListener('load', () => {
         statut = navigator.onLine ? true : false
         alert(statut)
@@ -11,6 +12,21 @@
     window.addEventListener('offline', () => {
         const states = document.getElementById('status')
         states.classList.add('hidden')
+    })
+
+    onMounted(() => {
+        id = 0
+        axios
+        .post("http://localhost:5174",{
+            data: id,
+            title: 'recuperation de donnée'
+        })
+        .then((reponse) => {
+        console.log(reponse.data, "requetes post envoyer avec ");
+        })
+        .catch((erreur) => {
+        throw erreur;
+        });
     })
 
     const scrollTop = () => {

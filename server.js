@@ -1,7 +1,9 @@
 const express = require("express");
 const fs = require("fs")
+const lineReader = require('line-reader');
 const cors = require("cors")
 const bodyParser = require("body-parser")
+const CSVToJSON = require("csvtojson")
 //const csv = require("csv-parser")
 
 function ConvertToCSV(obj) {
@@ -47,19 +49,64 @@ server.use(express.json())
 server.post('/',(req,res) => {
   console.log(req.body.title)
   console.log(req.body.data)
-  req.body.data.id = id
-  id++
-  const user = ConvertToCSV(req.body.data)
-  fs.appendFile('./src/données/base.csv', user +'\n',(err) => {
-    if (err) throw err
-    console.log('successfull wirte');
+  if (req.body.title === 'soumission de donnée'){
+    req.body.data.id = id
+    id++
+    const user = ConvertToCSV(req.body.data)
+    fs.appendFile('./src/données/base.csv', user +'\n',(err) => {
+      if (err) throw err
+      console.log('successfull wirte');
+    })
+  res.end(`save`+ req.body);
+  }
+  if (req.body.title === 'enregistré les modifications') {
+      const id = req.body.data
+      CSVToJSON().fromFile('./src/données/base.csv').
+      then(data => {
+        for (let i = 0; i < data.length; i++) {
+          if(id==data[i].id){
+            res.send(data[i])
+          }
+        }
+      }).catch(err => {
+        console.log(err);
+      })
+  }
+  if (req.body.title === 'verification de donnée') {
+    const user = req.body.data
+    CSVToJSON().fromFile('./src/données/base.csv').
+    then(data => {
+      for (let i = 0; i < data.length; i++) {
+        if(user.email===data[i].email){
+          if(user.password===data[i].mdp){
+            const Token = {
+              id: data[i].id,
+              state: "validé"
+            }
+            res.send(Token)
+            break
+          }else{
+            const Token = {
+              state: "mot de passe invalide"
+            }
+            res.send(Token)
+            break
+          }
+        }else{
+          if (i == data.length-1) {
+            const Token = {
+              state: "adresse mail incorrect"
+            }
+            res.send(Token)
+          }
+        }
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+  }
 })
-res.end(`save`+ req.body);
-})
-server.post('/dashboard/reglages',(req,res) => {
-  console.log(req.body)
-res.end(`edit save`+ req.body);
-})
+
 server.listen(port, host, () => {
     console.log(`Server is running on http://${host}:${port}`);
 });

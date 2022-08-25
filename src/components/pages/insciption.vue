@@ -29,6 +29,16 @@ import {
 const inscription = ref(false);
 let pointer = ref(0);
 
+const user = reactive({
+  email: "",
+  password: ""
+})
+
+const Token = reactive({
+  id: "",
+  state: "",
+})
+
 const valeurs = reactive({
   id: 0,
   nom: "",
@@ -101,47 +111,6 @@ const etapeSui = async () => {
     }
   }
 };
-/*
-    const getName = (name) => {
-      nom = name
-      return nom
-    }
-
-    const getSurname = (surname) => {
-      prenom = surname
-      return prenom
-    }
-
-    const getAge = (year) => {
-      age = year
-      return age
-    }
-
-    const getMail = (email) => {
-      mail = email
-      return mail
-    }
-
-    const getMdp = (password) => {
-      mdp = password
-      return mdp
-    }
-
-    const getPays = (pays) => {
-      country = pays
-      return country
-    }
-
-    const getVille = (ville) => {
-      town = ville
-      return town
-    }
-
-    const getGenre = (genre) => {
-      sexe = genre
-      return sexe
-    }
-*/
 const etapePre = () => {
   if (v$.value.$errors.length == 0) {
     pointer.value--;
@@ -151,7 +120,7 @@ const etapePre = () => {
 const ereure = {};
 
 const etapes = [etapeFirst, etapeSecond, etapeThird, etapeLast];
-async function onPush(register) {
+function onPush(register) {
   console.log(register);
 
   axios
@@ -162,6 +131,25 @@ async function onPush(register) {
     .then((reponse) => {
       router.push({ path: "/dashboard" });
       console.log(reponse, "requetes post envoyer avec ");
+    })
+    .catch((erreur) => {
+      throw erreur;
+    });
+}
+function sign_in(user){
+  axios
+    .post("http://localhost:5174", {
+      data: user,
+      title: 'verification de donnée'
+    })
+    .then((reponse) => {
+      console.log(reponse.data, "requetes post envoyer avec ");
+      Token.state = reponse.data.state
+      if(reponse.data.id){
+        Token.id = reponse.data.id
+        Session["id"]=Token.id
+        router.push({ path: "/dashboard" });
+      }
     })
     .catch((erreur) => {
       throw erreur;
@@ -349,7 +337,6 @@ export default {
         </div>
         <!--<div></div>-->
         <div>
-          <transition>
             <component
               v-bind:is="etapes[pointer]"
               v-bind:formVals="valeurs"
@@ -357,7 +344,6 @@ export default {
               :ereure="v$"
             >
             </component>
-          </transition>
         </div>
         <div>
           <button
@@ -399,10 +385,13 @@ export default {
         }"
       >
         <h1>Entrez vos identifiants</h1>
-        <input type="text" placeholder="Nom d'utilisateur" />
-        <input type="password" placeholder="Mot de passe" />
+        <input type="email" placeholder="Email" v-model="user.email"/>
+        <small class="text-red-400" v-if="Token.state === 'adresse mail incorrect'">{{ Token.state }}</small>
+        <input type="password" placeholder="Mot de passe" v-model="user.password"/>
+        <small class="text-red-400" v-if="Token.state === 'mot de passe invalide'">{{ Token.state }}</small>
         <button
-          class="button bg-[#252ed6] text-white active:scale-[.9] focus:outline-none bg-transparent border-white"
+          class="button bg-[#252ed6] text-white active:scale-[.9] focus:outline-none
+           bg-transparent border-white" @click="sign_in(user)"
         >
           Se connecté
         </button>

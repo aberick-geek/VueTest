@@ -10,8 +10,9 @@ const menu = () => {
 </script>
 
 <template>
+<div class="relative h-[70px]">
   <nav
-    class="p-5 sticky z-[1000] top-0 bg-white shadow md:flex md:items-center md:justify-between"
+    class="p-5 fixed w-full z-[1000] top-0 bg-white shadow md:flex md:items-center md:justify-between"
   >
     <div class="flex justify-between items-center">
       <span class="text-2xl cursor-pointer"> Web Site Design </span>
@@ -33,6 +34,7 @@ const menu = () => {
       </li>
     </ul>
   </nav>
+</div>
   <transition
     enter-active-class="duration-300 ease-out"
     enter-from-class="transform opacity-0 scale-75"
